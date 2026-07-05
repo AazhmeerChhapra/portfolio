@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-blue: #4d8dff;
+  --neon-violet: #8b5cf6;
+  --neon-magenta: #c26bff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  @apply bg-void text-frost font-body antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #04040a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4d8dff, #8b5cf6);
+  border-radius: 8px;
+  border: 2px solid #04040a;
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.02)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    @apply shadow-glass;
+  }
+
+  .glass-hover {
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  }
+  .glass-hover:hover {
+    border-color: rgba(77, 141, 255, 0.45);
+    box-shadow:
+      0 0 0 1px rgba(77, 141, 255, 0.15),
+      0 0 40px rgba(77, 141, 255, 0.12),
+      0 8px 32px rgba(2, 4, 16, 0.6);
+  }
+
+  .text-gradient {
+    @apply bg-neon-gradient bg-clip-text text-transparent;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs tracking-[0.35em] uppercase text-neon-blue;
+  }
+
+  .neon-ring {
+    box-shadow:
+      inset 0 0 0 1px rgba(139, 92, 246, 0.35),
+      0 0 24px rgba(139, 92, 246, 0.2);
+  }
+
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(77, 141, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(77, 141, 255, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--neon-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
