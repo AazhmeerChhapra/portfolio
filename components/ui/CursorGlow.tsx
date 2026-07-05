@@ -1,14 +1,21 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CursorGlow() {
   const ref = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    // Never mount the glow on touch/coarse-pointer devices: there is no
+    // mouse to track, and leaving the 600px box at its default top-left
+    // position would overflow narrow viewports and cause horizontal scroll.
+    setEnabled(!window.matchMedia('(pointer: coarse)').matches);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (!el || !enabled) return;
 
     let raf = 0;
     let tx = window.innerWidth / 2;
@@ -34,7 +41,9 @@ export default function CursorGlow() {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <div
@@ -45,6 +54,7 @@ export default function CursorGlow() {
         background:
           'radial-gradient(circle, rgba(77,141,255,0.25) 0%, rgba(139,92,246,0.12) 40%, transparent 70%)',
         filter: 'blur(40px)',
+        transform: 'translate3d(-300px, -300px, 0)',
       }}
     />
   );

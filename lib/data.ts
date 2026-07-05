@@ -15,7 +15,7 @@ export const site = {
   github: 'https://github.com/AazhmeerChhapra/',
   linkedin: 'https://www.linkedin.com/in/aazhmeer-chhapra/',
   cvPath: '/Aazhmeer_Chhapra_CV.pdf',
-  url: 'https://aazhmeer-chhapra.vercel.app',
+  url: 'https://portfolio-pied-delta-99.vercel.app/',
 };
 
 export const about = {

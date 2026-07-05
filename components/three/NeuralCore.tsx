@@ -29,13 +29,19 @@ export default function NeuralCore({ mouse }: { mouse: React.MutableRefObject<{ 
   const nodePositions = useMemo(() => fibonacciSphere(NODE_COUNT, RADIUS), []);
 
   const linePositions = useMemo(() => {
+    // Fibonacci-sphere points are generated in a spatially coherent order,
+    // so nearby indices are already close in space. Checking only a bounded
+    // window of neighbors (instead of every pair) keeps the same visual
+    // density at a fraction of the cost: O(n * WINDOW) instead of O(n^2).
     const verts: number[] = [];
     const maxDist = 0.85;
+    const WINDOW = 24;
     for (let i = 0; i < NODE_COUNT; i++) {
       const ax = nodePositions[i * 3];
       const ay = nodePositions[i * 3 + 1];
       const az = nodePositions[i * 3 + 2];
-      for (let j = i + 1; j < NODE_COUNT; j++) {
+      const end = Math.min(i + WINDOW, NODE_COUNT);
+      for (let j = i + 1; j < end; j++) {
         const bx = nodePositions[j * 3];
         const by = nodePositions[j * 3 + 1];
         const bz = nodePositions[j * 3 + 2];

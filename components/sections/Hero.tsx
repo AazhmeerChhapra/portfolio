@@ -8,7 +8,11 @@ import { site } from '@/lib/data';
 
 const HeroScene = dynamic(() => import('@/components/three/HeroScene'), {
   ssr: false,
-  loading: () => null,
+  loading: () => (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="h-40 w-40 animate-pulse-slow rounded-full bg-neon-gradient opacity-20 blur-3xl" />
+    </div>
+  ),
 });
 
 const container = {
